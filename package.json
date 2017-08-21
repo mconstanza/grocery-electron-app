@@ -1,0 +1,27 @@
+{
+  "name": "grocery-electron-app",
+  "version": "1.0.0",
+  "description": "A simple grocery list app to learn Electron.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mconstanza/grocery-electron-app.git"
+  },
+  "author": "MConstanza",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mconstanza/grocery-electron-app/issues"
+  },
+  "homepage": "https://github.com/mconstanza/grocery-electron-app#readme",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "electron": "^1.7.5",
+    "mongojs": "^2.4.1"
+  },
+  "devDependencies": {
+    "electron": "^1.7.5"
+  }
+}
