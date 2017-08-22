@@ -1,28 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="css/photon.css">
 </head>
+<style>
+  .checked {
+    text-decoration: line-through;
+  }
+</style>
 <body>
-  <ul id="items"></ul>
+  <ul id="items" class="list-group"><!--List Items inserted here--></ul>
   <button class="btn btn-default" onclick="index()">Back</button>
-  <script>
-    const ipc = require('electron').ipcRenderer;
-    index = () => {
-      ipc.send('load-page', {"link":'file://' + __dirname + '/index.html'})
-    }
 
-    ipc.on('list-view', (header, list) => {
-      console.log("list: ", list)
-      let itemList = document.getElementById('items')
-      itemList.innerHTML = ''
-      list.items.forEach((item) => {
-        console.log(item)
-        let listItem = document.createElement('LI')
-        listItemText = document.createTextNode(item)
-        listItem.appendChild(listItemText)
-        itemList.appendChild(listItem)
-      })
-    })
-  </script>
+
+
+  <script type="text/javascript" src='list.js'></script>
 </body>
 </html>
