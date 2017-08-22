@@ -4,7 +4,8 @@
   "description": "A simple grocery list app to learn Electron.",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,7 @@
   "dependencies": {
     "dotenv": "^4.0.0",
     "electron": "^1.7.5",
-    "mongojs": "^2.4.1"
+    "mongodb": "^2.2.31"
   },
   "devDependencies": {
     "electron": "^1.7.5"

@@ -2,8 +2,66 @@
   <html>
     <head>
       <title>Groceries, yo!</title>
+      <!-- Stylesheets -->
+      <link rel="stylesheet" href="css/photon.css">
     </head>
     <body>
-      <h1>Testing</h1>
+
+      <div class="window">
+        <header class="toolbar toolbar-header">
+          <h1 class="title">Grocery App</h1>
+        </header>
+        <div class="window-content">
+          <div class="pane-group">
+            <div class="pane">
+              <ul id="lists">
+                <!--Grocery lists in DB inserted here-->
+              </ul>
+              <button id="add-list-button" class="btn btn-default"><span class="icon icon-plus"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const ipc = require('electron').ipcRenderer;
+        // get grocery list UL from DOM
+        let groceryLists = document.getElementById('lists')
+        // Connect to database
+        let MongoClient = require('mongodb').MongoClient, assert = require('assert');
+        let uri = "mongodb://" + process.env.USER + ":" + process.env.PASS + process.env.DB
+        console.log(uri)
+        MongoClient.connect(uri, (err, db) => {
+          assert.equal(null, err);
+          console.log('database connected')
+          let lists = db.collection('Lists')
+
+          lists.find().sort({name: 1}).forEach((doc, err) => {
+            console.log(doc)
+            if(!doc) {
+              console.log("no docs")
+              return
+            } else {
+              console.log(doc)
+              displayList(doc)
+            }
+          })
+        })
+
+        displayList = (list) => {
+          let listItem = document.createElement("LI")
+          listItem.onclick = () => { ipc.send('load-page', {
+            "link": 'file://' + __dirname + '/list.html',
+            "name": list.name,
+            "items": list.items
+          }
+        )}
+          let listItemText = document.createTextNode(list.name)
+          listItem.appendChild(listItemText)
+          groceryLists.appendChild(listItem)
+        }
+
+      </script>
+
     </body>
   </html>
