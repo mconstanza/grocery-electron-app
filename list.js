@@ -53,18 +53,21 @@ addItems = (itemList, list) => {
 markItemChecked = (item) => {
   console.log("checkedItem: ", item)
   item.classList.toggle('checked')
+  let itemName = item.dataset.name
 
   // change checked value in database to match checked status
   MongoClient.connect(uri, (err, db) => {
     assert.equal(null, err);
     let lists = db.collection('Lists')
-    let queriedItem = lists.findOne({name: item.dataset.list, 'items.name': item.dataset.name})
-    lists.update({name: item.dataset.list, 'items.name': item.dataset.name}, {$set: { "items.$.checked": !queriedItem.checked}}, (err, response) => {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log("response: ", response)
-      }
+    lists.findOne({name: item.dataset.list}, {items: {$elemMatch: {name: itemName}}}, (err, response) => {
+      console.log(response)
+      lists.update({name: item.dataset.list, 'items.name': item.dataset.name}, {$set: { "items.$.checked": !response.items[0].checked}}, (err, response) => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log("response: ", response)
+        }
+      })
     })
   })
 }
