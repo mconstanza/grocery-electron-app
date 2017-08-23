@@ -26,7 +26,7 @@ MongoClient.connect(uri, (err, db) => {
 displayList = (list) => {
   let listItem = document.createElement("LI")
   listItem.setAttribute('class', 'list-group-item')
-  listItem.onclick = () => { ipc.send('load-page', {
+  listItem.onclick = () => { ipc.send('load-list', {
     "link": 'file://' + __dirname + '/list.html',
     "name": list.name,
     "items": list.items
